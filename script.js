@@ -2,7 +2,6 @@
 
 // Inicializando o armazenamento local
 const salesHistoryBody = document.getElementById("sales-history-body");
-const vehicleTypeFilter = document.getElementById("vehicle-type");
 const vehicleModelInput = document.getElementById("vehicle-model");
 const vehicleTypeSellSelect = document.getElementById("vehicle-type-sell");
 const saleValueInput = document.getElementById("sale-value");
@@ -139,7 +138,10 @@ const removeSale = (index) => {
 const updateMonthlyProfit = () => {
     const currentMonth = new Date().getMonth();
     const monthlySales = sales.filter(sale => new Date(sale.date).getMonth() === currentMonth);
+    
     const totalProfit = monthlySales.reduce((sum, sale) => sum + sale.value, 0);
+    
+    // Exibir o lucro mensal
     monthlyProfitSpan.textContent = `R$ ${totalProfit.toFixed(2)}`;
 };
 
@@ -161,12 +163,16 @@ const updateVehicleStock = () => {
     });
 };
 
+// Função para inicializar as informações ao carregar a página
+const init = () => {
+    updateSalesHistory();
+    updateMonthlyProfit();
+    updateVehicleStock();
+};
+
 // Eventos
 document.getElementById("register-sale").addEventListener("click", registerSale);
 document.getElementById("register-vehicle").addEventListener("click", registerVehicle);
 
 // Inicializar a página
-updateSalesHistory();
-updateMonthlyProfit();
-updateVehicleStock();
-
+init();
