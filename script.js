@@ -24,20 +24,29 @@ const registerVehicle = () => {
     const quantity = parseInt(vehicleQuantity.value);
     const type = document.getElementById("vehicle-type-register").value;
 
+    // Validação
     if (!model || !brand || !year || isNaN(quantity) || quantity < 1) {
         alert("Por favor, preencha todos os campos corretamente.");
         return;
     }
 
-    const vehicle = {
-        model,
-        brand,
-        year,
-        quantity,
-        type
-    };
+    const existingVehicle = vehicles.find(v => v.model === model && v.type === type);
+    if (existingVehicle) {
+        // Se o veículo já existir, apenas incrementa a quantidade
+        existingVehicle.quantity += quantity;
+    } else {
+        // Se o veículo não existir, adiciona um novo
+        const vehicle = {
+            model,
+            brand,
+            year,
+            quantity,
+            type
+        };
+        vehicles.push(vehicle);
+    }
 
-    vehicles.push(vehicle);
+    // Salvar veículos no localStorage
     localStorage.setItem('vehicles', JSON.stringify(vehicles));
     alert("Veículo cadastrado com sucesso!");
     clearVehicleFields();
@@ -124,7 +133,6 @@ const updateMonthlyProfit = () => {
 
 // Função para atualizar o estoque de veículos
 const updateVehicleStock = () => {
-    // Exibir o estoque na interface
     const vehicleStockContainer = document.getElementById("vehicle-stock-list");
     vehicleStockContainer.innerHTML = "";
 
