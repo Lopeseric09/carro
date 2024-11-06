@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Vendas e Estoque de Automóveis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJx3wNf9gA7fF0aZfW1M0wDq4eVYcBBdbk3S4a9Xq+U9ttQssbIuH85bW5af" crossorigin="anonymous">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .filter-group, .sales-history, .vehicle-stock {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Controle de Vendas e Estoque de Automóveis</h1>
+
+        <!-- Cadastro de Veículos -->
+        <div class="vehicle-stock">
+            <h3>Cadastrar Veículo</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="vehicle-model-register" class="form-label">Modelo do Veículo</label>
+                    <input type="text" class="form-control" id="vehicle-model-register">
+                </div>
+                <div class="col-md-4">
+                    <label for="vehicle-brand" class="form-label">Marca</label>
+                    <input type="text" class="form-control" id="vehicle-brand">
+                </div>
+                <div class="col-md-4">
+                    <label for="vehicle-year" class="form-label">Ano de Fabricação</label>
+                    <input type="number" class="form-control" id="vehicle-year">
+                </div>
+                <div class="col-md-4">
+                    <label for="vehicle-type-register" class="form-label">Tipo de Veículo</label>
+                    <select class="form-select" id="vehicle-type-register">
+                        <option value="carro">Carro</option>
+                        <option value="moto">Moto</option>
+                        <option value="caminhao">Caminhão</option>
+                        <option value="caminhote">Caminhote</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="vehicle-quantity" class="form-label">Quantidade em Estoque</label>
+                    <input type="number" class="form-control" id="vehicle-quantity" min="0">
+                </div>
+            </div>
+            <button class="btn btn-primary mt-3" id="register-vehicle">Cadastrar Veículo</button>
+        </div>
+
+        <!-- Filtro de Veículos -->
+        <div class="filter-group">
+            <h3>Filtrar Veículos</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="vehicle-type" class="form-label">Tipo de Veículo</label>
+                    <select class="form-select" id="vehicle-type">
+                        <option value="">Todos</option>
+                        <option value="carro">Carro</option>
+                        <option value="moto">Moto</option>
+                        <option value="caminhao">Caminhão</option>
+                        <option value="caminhote">Caminhote</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="filter-month" class="form-label">Mês</label>
+                    <input type="month" class="form-control" id="filter-month">
+                </div>
+            </div>
+        </div>
+
+        <!-- Registro de Vendas -->
+        <div class="sales-record">
+            <h3>Cadastrar Venda</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="vehicle-model" class="form-label">Modelo do Veículo</label>
+                    <input type="text" class="form-control" id="vehicle-model">
+                </div>
+                <div class="col-md-4">
+                    <label for="vehicle-type-sell" class="form-label">Tipo de Veículo</label>
+                    <select class="form-select" id="vehicle-type-sell">
+                        <option value="carro">Carro</option>
+                        <option value="moto">Moto</option>
+                        <option value="caminhao">Caminhão</option>
+                        <option value="caminhote">Caminhote</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="sale-value" class="form-label">Valor da Venda (R$)</label>
+                    <input type="number" class="form-control" id="sale-value" step="0.01">
+                </div>
+            </div>
+            <button class="btn btn-primary mt-3" id="register-sale">Registrar Venda</button>
+        </div>
+
+        <!-- Histórico de Vendas -->
+        <div class="sales-history">
+            <h3>Histórico de Vendas</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Modelo</th>
+                        <th>Tipo</th>
+                        <th>Valor (R$)</th>
+                    </tr>
+                </thead>
+                <tbody id="sales-history-body">
+                    <!-- Histórico de vendas será adicionado aqui -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Lucro Mensal -->
+        <div class="mt-4">
+            <h3>Lucro Mensal</h3>
+            <p>Total de Lucro: <span id="monthly-profit">R$ 0,00</span></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
