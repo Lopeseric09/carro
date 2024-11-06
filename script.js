@@ -11,7 +11,8 @@ const vehicleModelRegister = document.getElementById("vehicle-model-register");
 const vehicleBrand = document.getElementById("vehicle-brand");
 const vehicleYear = document.getElementById("vehicle-year");
 const vehicleQuantity = document.getElementById("vehicle-quantity");
-const filterMonthInput = document.getElementById("filter-month");
+const vehicleValue = document.getElementById("vehicle-value");
+const vehicleFipe = document.getElementById("vehicle-fipe");
 
 let sales = JSON.parse(localStorage.getItem('sales')) || [];
 let vehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
@@ -23,9 +24,11 @@ const registerVehicle = () => {
     const year = parseInt(vehicleYear.value);
     const quantity = parseInt(vehicleQuantity.value);
     const type = document.getElementById("vehicle-type-register").value;
+    const value = parseFloat(vehicleValue.value);
+    const fipe = parseFloat(vehicleFipe.value);
 
     // Validação
-    if (!model || !brand || !year || isNaN(quantity) || quantity < 1) {
+    if (!model || !brand || !year || isNaN(quantity) || quantity < 1 || isNaN(value) || value <= 0 || isNaN(fipe) || fipe <= 0) {
         alert("Por favor, preencha todos os campos corretamente.");
         return;
     }
@@ -41,7 +44,9 @@ const registerVehicle = () => {
             brand,
             year,
             quantity,
-            type
+            type,
+            value,
+            fipe
         };
         vehicles.push(vehicle);
     }
@@ -59,6 +64,8 @@ const clearVehicleFields = () => {
     vehicleBrand.value = "";
     vehicleYear.value = "";
     vehicleQuantity.value = "";
+    vehicleValue.value = "";
+    vehicleFipe.value = "";
 };
 
 // Função para registrar uma venda
@@ -107,20 +114,25 @@ const clearSaleFields = () => {
 const updateSalesHistory = () => {
     salesHistoryBody.innerHTML = "";
 
-    const filteredSales = filterMonthInput.value
-        ? sales.filter(sale => new Date(sale.date).toLocaleString().includes(filterMonthInput.value))
-        : sales;
-
-    filteredSales.forEach(sale => {
+    sales.forEach((sale, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${sale.date}</td>
             <td>${sale.model}</td>
             <td>${sale.type}</td>
             <td>R$ ${sale.value.toFixed(2)}</td>
+            <td><button class="btn remove-sale-btn" onclick="removeSale(${index})">Remover</button></td>
         `;
         salesHistoryBody.appendChild(row);
     });
+};
+
+// Função para remover uma venda do histórico
+const removeSale = (index) => {
+    sales.splice(index, 1);
+    localStorage.setItem('sales', JSON.stringify(sales));
+    updateSalesHistory();
+    updateMonthlyProfit();
 };
 
 // Função para calcular o lucro mensal
@@ -142,18 +154,19 @@ const updateVehicleStock = () => {
             <td>${vehicle.model}</td>
             <td>${vehicle.type}</td>
             <td>${vehicle.quantity}</td>
+            <td>R$ ${vehicle.value.toFixed(2)}</td>
+            <td>R$ ${vehicle.fipe.toFixed(2)}</td>
         `;
         vehicleStockContainer.appendChild(row);
     });
 };
 
-// Evento de registrar venda
+// Eventos
 document.getElementById("register-sale").addEventListener("click", registerSale);
-
-// Evento de registrar veículo
 document.getElementById("register-vehicle").addEventListener("click", registerVehicle);
 
 // Inicializar a página
 updateSalesHistory();
 updateMonthlyProfit();
 updateVehicleStock();
+
