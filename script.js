@@ -177,3 +177,4 @@ document.getElementById("register-vehicle").addEventListener("click", registerVe
 // Inicializar a página
 init();
 
+
