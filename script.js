@@ -120,7 +120,7 @@ const updateSalesHistory = () => {
             <td>${sale.model}</td>
             <td>${sale.type}</td>
             <td>R$ ${sale.value.toFixed(2)}</td>
-            <td><button class="btn remove-sale-btn" onclick="removeSale(${index})">Remover</button></td>
+            <td><button class="btn btn-remove" onclick="removeSale(${index})">Remover</button></td>
         `;
         salesHistoryBody.appendChild(row);
     });
@@ -176,3 +176,4 @@ document.getElementById("register-vehicle").addEventListener("click", registerVe
 
 // Inicializar a página
 init();
+
